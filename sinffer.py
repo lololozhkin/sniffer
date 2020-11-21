@@ -1,5 +1,7 @@
 import socket
-import struct, time, sys
+import struct
+import sys
+import time
 
 from pcap_record_composer import PcapRecordComposer
 
@@ -53,4 +55,3 @@ class Sniffer:
             microseconds = int((t - seconds) * 1000)
             composer = PcapRecordComposer(data, seconds, microseconds)
             self.dump_file.write(composer.compose())
-
