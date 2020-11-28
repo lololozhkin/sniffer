@@ -17,8 +17,17 @@ def main():
     )
 
     args = parser.parse_args()
-    sniffer = Sniffer(args.dump_file)
-    sniffer.start_sniffing()
+    try:
+        sniffer = Sniffer(args.dump_file)
+    except FileNotFoundError:
+        print('Cannot create dumpfile. '
+              'Check path to dumpfile more carefully please.')
+        return
+    try:
+        sniffer.start_sniffing()
+    except KeyboardInterrupt:
+        print('')
+        return
 
 
 if __name__ == '__main__':
