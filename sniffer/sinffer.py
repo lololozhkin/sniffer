@@ -13,8 +13,6 @@ class Sniffer:
         if any(arg is None for arg in (dump_writer, output_writer, receiver)):
             raise ValueError("One or more arguments were given as None")
 
-        print(dump_writer, output_writer, receiver)
-
         self.dump_writer = dump_writer
         self.out_writer = output_writer
         self.receiver = receiver

@@ -1,14 +1,9 @@
 from abc import ABC, abstractmethod
-import os
 
 
 class DumpWriter(ABC):
-    def __init__(self, file_path: str = None):
-        try:
-            open(file_path, 'wb').close()
-            self._file_path = file_path
-        except Exception:
-            raise
+    def __init__(self, file=None):
+        self.file = file
 
     @abstractmethod
     def write_data(self, data: bytes):

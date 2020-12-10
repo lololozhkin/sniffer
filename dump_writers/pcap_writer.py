@@ -2,7 +2,7 @@ import struct
 import time
 
 from dump_writers.dump_writer import DumpWriter
-from pcap_record_composer import PcapRecordComposer
+from composers.pcap_record_composer import PcapRecordComposer
 
 
 class PcapWriter(DumpWriter):
@@ -14,9 +14,10 @@ class PcapWriter(DumpWriter):
     SNAP_LEN = 0x40000
     NETWORK = 1
 
-    def __init__(self, file_path=None):
-        super().__init__(file_path)
-        self._file = None
+    def __init__(self, file):
+        if file is None:
+            raise ValueError('None is given instead of file. File is required')
+        super().__init__(file)
 
     @staticmethod
     def global_pcap_header():
@@ -34,25 +35,14 @@ class PcapWriter(DumpWriter):
 
     def write_data(self, data: bytes):
         t = time.time()
-
-        if self._file is not None:
-            composer = PcapRecordComposer(data, t)
-            self._file.write(composer.compose())
-        else:
-            raise ValueError("Writer is not opened")
+        composer = PcapRecordComposer(data, t)
+        self.file.write(composer.compose())
 
     def open_writer(self):
-        if self._file_path is not None:
-            self._file = open(self._file_path, 'wb')
-            self._file.write(self.global_pcap_header())
-        else:
-            raise ValueError("Dumpfile is not set")
+        self.file.write(self.global_pcap_header())
 
     def close(self):
-        if self._file is None:
-            raise ValueError("File is not set")
-
-        self._file.close()
+        self.file.close()
 
     def __enter__(self):
         self.open_writer()
