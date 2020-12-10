@@ -2,10 +2,10 @@ import struct
 
 
 class PcapRecordComposer:
-    def __init__(self, data: bytes, seconds, microseconds):
+    def __init__(self, data: bytes, time_in_seconds: float):
         self.data = data
-        self.seconds = seconds
-        self.microseconds = microseconds
+        self.seconds = int(time_in_seconds)
+        self.microseconds = time_in_seconds - self.seconds
 
     def compose(self):
         data_len = len(self.data)

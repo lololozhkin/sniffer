@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
 import argparse
+
+from dump_writers.pcap_writer import PcapWriter
+from output_writer.simple_bytes_output import BytesOutput
 from sinffer import Sniffer
 
 
@@ -17,17 +20,12 @@ def main():
     )
 
     args = parser.parse_args()
-    try:
-        sniffer = Sniffer(args.dump_file)
-    except FileNotFoundError:
-        print('Cannot create dumpfile. '
-              'Check path to dumpfile more carefully please.')
-        return
-    try:
-        sniffer.start_sniffing()
-    except KeyboardInterrupt:
-        print('')
-        return
+    path = args.dump_file
+
+    dump_writer = PcapWriter(path)
+    out_writer = BytesOutput()
+    sniffer = Sniffer(dump_writer, out_writer)
+    sniffer.start_sniffing()
 
 
 if __name__ == '__main__':
