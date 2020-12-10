@@ -3,7 +3,8 @@
 import argparse
 
 from dump_writers.pcap_writer import PcapWriter
-from output_writer.simple_bytes_output import BytesOutput
+from output_writer.formatted_writer import FormattedWriter
+from receivers.socket_receiver import SocketReceiver
 from sinffer import Sniffer
 
 
@@ -23,8 +24,10 @@ def main():
     path = args.dump_file
 
     dump_writer = PcapWriter(path)
-    out_writer = BytesOutput()
-    sniffer = Sniffer(dump_writer, out_writer)
+    out_writer = FormattedWriter()
+    receiver = SocketReceiver()
+
+    sniffer = Sniffer(dump_writer, out_writer, receiver)
     sniffer.start_sniffing()
 
 

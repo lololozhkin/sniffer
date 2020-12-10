@@ -1,8 +1,12 @@
+import sys
 from abc import ABC, abstractmethod
 from typing import Union
 
 
 class OutputWriter(ABC):
+    def __init__(self, out=sys.stdout):
+        self.out = out
+
     @abstractmethod
     def write(self, data: Union[bytes, str]):
         pass

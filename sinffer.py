@@ -1,35 +1,30 @@
-import socket
-
 from dump_writers.dump_writer import DumpWriter
 from output_writer.output_writer import OutputWriter
+from receivers.receiver import Receiver
 
 
 class Sniffer:
-    ETH_P_ALL = 3
-
     def __init__(
             self,
             dump_writer: DumpWriter,
-            output_writer: OutputWriter
+            output_writer: OutputWriter,
+            receiver: Receiver
     ):
-        if dump_writer is None or output_writer is None:
+        if any(arg is None for arg in (dump_writer, output_writer, receiver)):
             raise ValueError("One or more arguments were given as None")
+
+        print(dump_writer, output_writer, receiver)
 
         self.dump_writer = dump_writer
         self.out_writer = output_writer
-        self.sock = socket.socket(
-            socket.AF_PACKET,
-            socket.SOCK_RAW,
-            socket.htons(Sniffer.ETH_P_ALL)
-        )
-
+        self.receiver = receiver
         self.packets_captured = 0
 
     def start_sniffing(self):
         with self.dump_writer as dump, self.out_writer as out:
             try:
                 while True:
-                    data, _ = self.sock.recvfrom(5000)
+                    data = self.receiver.recv(5000)
                     self.packets_captured += 1
                     dump.write_data(data)
                     out.write(data)
