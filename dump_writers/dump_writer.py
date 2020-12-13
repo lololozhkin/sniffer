@@ -2,11 +2,8 @@ from abc import ABC, abstractmethod
 
 
 class DumpWriter(ABC):
-    def __init__(self, file=None):
-        self.file = file
-
     @abstractmethod
-    def write_data(self, data: bytes):
+    def write_data(self, data: bytes, time_in_seconds: float = 0.0):
         pass
 
     @abstractmethod

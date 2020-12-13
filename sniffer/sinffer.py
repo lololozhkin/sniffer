@@ -1,3 +1,5 @@
+import time
+
 from dump_writers.dump_writer import DumpWriter
 from output_writer.output_writer import OutputWriter
 from receivers.receiver import Receiver
@@ -23,8 +25,9 @@ class Sniffer:
             try:
                 while True:
                     data = self.receiver.recv(5000)
+                    t = time.time()
                     self.packets_captured += 1
-                    dump.write_data(data)
-                    out.write(data)
+                    dump.write_data(data, t)
+                    out.write(data, t)
             except KeyboardInterrupt:
                 out.write(f'\n\nPackets captured: {self.packets_captured}')

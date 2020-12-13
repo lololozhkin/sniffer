@@ -4,7 +4,7 @@ from output_writer.output_writer import OutputWriter
 
 
 class OutNothing(OutputWriter):
-    def write(self, data: Union[bytes, str]):
+    def write(self, data: Union[bytes, str], time_in_seconds: float):
         pass
 
     def __enter__(self):

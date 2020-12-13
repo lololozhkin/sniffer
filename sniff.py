@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-
-import argparse
-
+from packets.visitors.first_verbosity_visitor import FirstVerbosityVisitor
+from packets.visitors.second_verbosity_visitor import SecondVerbosityVisitor
+from packets.visitors.zero_verbosity_visitor import ZeroVerbosityVisitor
+from parsers.main_parser import get_parser
 from dump_writers.empty_writer import EmptyWriter
 from dump_writers.pcap_writer import PcapWriter
 from output_writer.formatted_writer import FormattedWriter
@@ -10,28 +11,25 @@ from sniffer.sinffer import Sniffer
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        prog='Sniffer allows you to see all packets appeared '
-             'in your network adapter and dump them to pcap format'
-    )
-    parser.add_argument(
-        '-d',
-        '--dump-file',
-        help='Dump data to that file',
-        type=str
-    )
+    parser = get_parser()
 
     args = parser.parse_args()
+    args.verbosity = min(args.verbosity, 2)
     path = args.dump_file
+
+    verbosity_to_visitor = [
+        ZeroVerbosityVisitor(),
+        FirstVerbosityVisitor(),
+        SecondVerbosityVisitor()
+    ]
 
     try:
         if path is not None:
-            file = open(path, 'wb')
-            dump_writer = PcapWriter(file)
+            dump_writer = PcapWriter(path, args.max_size)
         else:
             dump_writer = EmptyWriter()
 
-        out_writer = FormattedWriter()
+        out_writer = FormattedWriter(verbosity_to_visitor[args.verbosity])
         receiver = SocketReceiver()
     except FileNotFoundError:
         print(f'File {args.dump_file} is not found or could not be created')

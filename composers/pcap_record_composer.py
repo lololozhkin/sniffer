@@ -5,7 +5,7 @@ class PcapRecordComposer:
     def __init__(self, data: bytes, time_in_seconds: float):
         self.data = data
         self.seconds = int(time_in_seconds)
-        self.microseconds = time_in_seconds - self.seconds
+        self.microseconds = (time_in_seconds - self.seconds) * 1000
 
     def compose(self):
         data_len = len(self.data)

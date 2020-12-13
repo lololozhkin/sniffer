@@ -2,7 +2,7 @@ from dump_writers.dump_writer import DumpWriter
 
 
 class EmptyWriter(DumpWriter):
-    def write_data(self, data: bytes):
+    def write_data(self, data: bytes, time_in_seconds: float = 0.0):
         pass
 
     def open_writer(self):

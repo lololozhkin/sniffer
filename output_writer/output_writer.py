@@ -8,7 +8,7 @@ class OutputWriter(ABC):
         self.out = out
 
     @abstractmethod
-    def write(self, data: Union[bytes, str]):
+    def write(self, data: Union[bytes, str], time_in_seconds: float = 0):
         pass
 
     @abstractmethod
