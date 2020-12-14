@@ -39,5 +39,22 @@ def get_parser():
              'Time is shown in microseconds',
         action='store_true',
     )
+    parser.add_argument(
+        '-i',
+        '--ifaces',
+        help='By default, this program will sniff packets at all interfaces. '
+             'If you want to specify only needed interfaces, '
+             'use this parameter',
+        nargs='+',
+        type=str
+    )
+    parser.add_argument(
+        '-f',
+        '--filter',
+        help="Simple filter, using noe field of packet's protocol. "
+             "Format is written in readme. For example: TCP.src_port == 1337",
+        type=str,
+        default=None
+    )
 
     return parser

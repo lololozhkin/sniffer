@@ -15,6 +15,7 @@ class FormattedWriter(OutputWriter):
             out=sys.stdout
     ):
         super().__init__(out)
+        self.start_time = time.time()
         self.time_needed = time_needed
         self.visitor = visitor
 
@@ -31,7 +32,8 @@ class FormattedWriter(OutputWriter):
 
             out = '\n'.join(parts)
             if self.time_needed:
-                out = f'{time_in_seconds * 10**6:.3f}: {out}'
+                t = (time_in_seconds - self.start_time)
+                out = f'{t:.4f} ms: {out}'
             out += '\n'
             print(out, file=self.out)
         else:

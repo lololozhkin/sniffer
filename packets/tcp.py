@@ -52,6 +52,12 @@ class TCP(Packet):
             self.options_and_data = options_and_data
             self.checksum = 0
 
+        self.syn = self.is_syn
+        self.ack = self.is_ack
+        self.push = self.is_push
+        self.rst = self.is_rst
+        self.fin = self.is_fin
+
     def __str__(self):
         ans = f'from: {self.src_port}, ' \
               f'to: {self.dst_port}, ' \

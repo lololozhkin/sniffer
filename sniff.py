@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from filters.filter_from_str import filter_from_str
 from packets.visitors.first_verbosity_visitor import FirstVerbosityVisitor
 from packets.visitors.second_verbosity_visitor import SecondVerbosityVisitor
 from packets.visitors.zero_verbosity_visitor import ZeroVerbosityVisitor
@@ -24,13 +25,22 @@ def main():
     ]
 
     try:
+        filter_func = filter_from_str(args.filter)
+    except ValueError as e:
+        print(e)
+        return
+
+    try:
         if path is not None:
             dump_writer = PcapWriter(path, args.max_size)
         else:
             dump_writer = EmptyWriter()
 
-        out_writer = FormattedWriter(verbosity_to_visitor[args.verbosity])
-        receiver = SocketReceiver()
+        out_writer = FormattedWriter(
+            verbosity_to_visitor[args.verbosity],
+            args.time
+        )
+        receiver = SocketReceiver(*args.ifaces)
     except FileNotFoundError:
         print(f'File {args.dump_file} is not found or could not be created')
         return
@@ -44,7 +54,7 @@ def main():
         print(e)
         return
 
-    sniffer = Sniffer(dump_writer, out_writer, receiver)
+    sniffer = Sniffer(dump_writer, out_writer, receiver, filter_func)
     sniffer.start_sniffing()
 
 
