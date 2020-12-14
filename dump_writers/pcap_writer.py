@@ -1,6 +1,5 @@
 import os
 import struct
-import time
 
 from dump_writers.dump_writer import DumpWriter
 from composers.pcap_record_composer import PcapRecordComposer

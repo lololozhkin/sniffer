@@ -1,2 +1,1 @@
 hexdump==3.3
-scapy==2.4.4

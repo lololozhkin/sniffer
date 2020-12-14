@@ -4,8 +4,6 @@ import time
 from collections import deque
 from typing import Tuple
 
-from packets.ether import Ether
-from packets.packet import Packet
 from receivers.receiver import Receiver
 
 
@@ -34,6 +32,7 @@ class SocketReceiver(Receiver):
                 self.epoll.register(sock.fileno(), select.EPOLLIN)
                 self.descriptor_to_socket[sock.fileno()] = sock
         else:
+            print('aaaaa')
             sock = socket.socket(
                     socket.AF_PACKET,
                     socket.SOCK_RAW,

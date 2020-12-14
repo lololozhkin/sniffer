@@ -32,7 +32,7 @@ def filter_for_attribute(packet: Packet, layer: str, attr: str, value: str):
     return str(layer.__dict__[attr]) == value
 
 
-def filter_from_str(str_filter: str):
+def filter_from_str(str_filter: str = None):
     if str_filter is None:
         return lambda data: True
 

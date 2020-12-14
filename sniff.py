@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+
+
 from filters.filter_from_str import filter_from_str
 from packets.visitors.first_verbosity_visitor import FirstVerbosityVisitor
 from packets.visitors.second_verbosity_visitor import SecondVerbosityVisitor
@@ -16,6 +18,7 @@ def main():
 
     args = parser.parse_args()
     args.verbosity = min(args.verbosity, 2)
+    args.ifaces = list() if args.ifaces is None else args.ifaces
     path = args.dump_file
 
     verbosity_to_visitor = [
