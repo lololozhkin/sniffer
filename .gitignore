@@ -2,3 +2,4 @@
 /.idea/
 /**/__pycache__/
 /trash/
+/.pytest_cache/
