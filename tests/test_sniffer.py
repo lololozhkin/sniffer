@@ -1,5 +1,4 @@
 import unittest
-from io import StringIO
 from unittest import mock
 
 from dump_writers.dump_writer import DumpWriter
@@ -86,5 +85,3 @@ class TestSniffer(unittest.TestCase):
         self.recv_packets = [b'love sniffing', b'very much']
         self.sniffer.start_sniffing()
         self.writer_mock.write.assert_called_once()
-
-
