@@ -7,14 +7,17 @@ from packets.tcp import TCP
 from packets.udp import UDP
 
 
-class PacketsTest(TestCase):
-    def TestEtherFields(self):
+class TestPackets(TestCase):
+    def testEtherFields(self):
         packet = b'\xa1\xb2\xc3\xd4\xe5\xf6\xf6\xe5\xd4\xc3\xb2\xa1\x90\x00'
         e = Ether(_pkt=packet)
-        self.assertEqual('a1:b2:c3:d4:e5:f6', e.dst)
-        self.assertEqual('f6:e5:d4:c3:b2:a1', e.src)
-
-        e = Ether(src_mac='f6:e5:d4:c3:b2:a1', dst_mac='f6:e5:d4:c3:b2:a1')
+        self.assertEqual('a1:b2:c3:d4:e5:f6', e.src)
+        self.assertEqual('f6:e5:d4:c3:b2:a1', e.dst)
+        e = Ether(
+            src_mac='a1:b2:c3:d4:e5:f6',
+            dst_mac='f6:e5:d4:c3:b2:a1',
+            typ=0x9000
+        )
         self.assertEqual(packet, e.build())
 
     def testIPFields(self):

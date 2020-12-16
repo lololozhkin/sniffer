@@ -16,7 +16,7 @@ class Ether(Packet):
             _pkt: bytes = None,
             src_mac: Union[bytes, str] = '00:00:00:00:00:00',
             dst_mac: Union[bytes, str] = 'ff:ff:ff:ff:ff:ff',
-            typ: int = 0,
+            typ: int = 0x0800,
             payload: bytes = b''
     ):
         self.int_to_proto = {

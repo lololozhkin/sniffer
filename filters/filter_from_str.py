@@ -29,7 +29,7 @@ def filter_for_attribute(packet: Packet, layer: str, attr: str, value: str):
 
     layer = packet.get_layer(str_proto_to_class[layer.lower()])
 
-    return str(layer.__dict__[attr]) == value
+    return str(layer.__dict__[attr]).lower() == value
 
 
 def filter_from_str(str_filter: str = None):
@@ -66,6 +66,10 @@ def filter_from_str(str_filter: str = None):
                 left_split[0],
                 left_split[1],
                 right
+            )
+        else:
+            raise ValueError(
+                "Invalid attribute. It must contain exactly one dot"
             )
     else:
         raise ValueError("Incorrect filter syntax (== must be in filter)")
