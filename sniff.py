@@ -43,7 +43,11 @@ def main():
             verbosity_to_visitor[args.verbosity],
             args.time
         )
-        receiver = SocketReceiver(*args.ifaces)
+        try:
+            receiver = SocketReceiver(*args.ifaces)
+        except OSError as e:
+            print(f'Error: {e}')
+            return 0
     except FileNotFoundError:
         print(f'File {args.dump_file} is not found or could not be created')
         return
