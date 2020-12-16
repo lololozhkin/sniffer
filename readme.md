@@ -40,7 +40,7 @@ First part is (protocol of packet).(attribute to be compared), and the second is
 
 All the attributes of packets you may see here:
 
-###TCP
+### TCP
 TCP.src_port \
 TCP.dst.port \
 TCP.syn (True, False) \
@@ -55,11 +55,11 @@ TCP.data_offset \
 TCP.urg_ptr \
 TCP.window_size \
 
-###UDP
+### UDP
 UDP.src_port \
 UDP.dst_port \
 
-###IP
+### IP
 IP.qos \
 IP.id \
 IP.flags (int value) \
@@ -68,12 +68,12 @@ IP.proto (by integer value) \
 IP.src \
 IP.dst
 
-###Ethernet
+### Ethernet
 Ethernet.src_mac \
 Ethernet.dst_mac \
 Ethernet.typ (type by integer value) \
 
-###ARP
+### ARP
 ARP.h_type (hardware type by integer value) \
 ARP.p_type (protocol type by integer value) \
 ARP.h_len (length of hardware address) \
