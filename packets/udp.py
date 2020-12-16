@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 class UDP(Packet):
     def __init__(
             self,
-            _pkt: bytes,
+            _pkt: bytes = None,
             src_port: int = 20,
             dst_port: int = 53,
             payload=b''

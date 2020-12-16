@@ -11,16 +11,6 @@ if TYPE_CHECKING:
 
 
 class ARP(Packet):
-    type_to_str_formatter = {
-        0x0001: ether.Ether.mac_to_str,
-        0x0800: ip.IPv4.str_ip
-    }
-
-    type_to_bytes_formatter = {
-        0x0001: ether.Ether.mac_to_bytes,
-        0x0800: ip.IPv4.bytes_ip
-    }
-
     def __init__(
             self,
             _pkt=None,
@@ -34,6 +24,16 @@ class ARP(Packet):
             h_dst: Union[bytes, str] = b'',
             p_dst: Union[bytes, str] = b''
     ):
+        self.type_to_str_formatter = {
+            0x0001: ether.Ether.mac_to_str,
+            0x0800: ip.IPv4.str_ip
+        }
+
+        self.type_to_bytes_formatter = {
+            0x0001: ether.Ether.mac_to_bytes,
+            0x0800: ip.IPv4.bytes_ip
+        }
+
         if _pkt is not None:
             unpack = struct.unpack(
                 '>HHBBH',
