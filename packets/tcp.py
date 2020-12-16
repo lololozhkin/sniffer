@@ -26,7 +26,7 @@ class TCP(Packet):
             seq_num: int = 0,
             ack_num: int = 0,
             data_offset: int = 5,
-            chsum: int = 0,
+            checksum: int = 0,
             flags: int = TCPFlags.SYN,
             window_size: int = 1024,
             urg_ptr: int = 0,
@@ -51,7 +51,7 @@ class TCP(Packet):
             self.window_size = window_size
             self.urg_ptr = urg_ptr
             self.options_and_data = options_and_data
-            self.checksum = chsum
+            self.checksum = checksum
 
         self.syn = self.is_syn
         self.ack = self.is_ack
