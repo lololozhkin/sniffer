@@ -52,13 +52,13 @@ class TestDumpWriter(TestCase):
             len(first_packet) * 1024,
             len(second_packet) * 1024
         ]
-        self.dump_writer = PcapWriter('', 1)
+        self.dump_writer = PcapWriter('file', 1)
         with self.dump_writer as w:
             w.write_data(first_packet)
-            open_mock.assert_called_with('1', 'wb')
+            open_mock.assert_called_with('file.1.pcap', 'wb')
 
             w.write_data(second_packet)
-            open_mock.assert_called_with('2', 'wb')
+            open_mock.assert_called_with('file.2.pcap', 'wb')
 
     def testDumpWriter_ThrowsIfFileIsNotSet(self):
         self.assertRaises(ValueError, self.dump_writer.write_data, 'abacaba')
