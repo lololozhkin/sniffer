@@ -12,7 +12,7 @@ class SocketReceiver(Receiver):
     MAX_SIZE = 1518
 
     def __init__(self, *interfaces):
-        self.epoll = select.epoll()
+        self.epoll = select.poll()
         self.packets = deque()
 
         self.descriptor_to_socket = {}

@@ -15,6 +15,8 @@ class PcapWriter(DumpWriter):
     NETWORK = 1
 
     def __init__(self, file_path: str, max_size: int = -1):
+        if not file_path.endswith('.pcap'):
+            file_path += '.pcap'
         self.file_path = file_path
         self.max_size = max_size
         self.total_files = 0
@@ -37,7 +39,7 @@ class PcapWriter(DumpWriter):
     def write_data(self, data: bytes, time_in_seconds: float = 0.0):
         if self.file is None:
             raise ValueError('dumpfile is not set')
-        
+
         composer = PcapRecordComposer(data, time_in_seconds)
         if self.max_size != -1 and self.max_size * 1024 <= self.file.tell():
             self.open_new_writer()
@@ -46,11 +48,12 @@ class PcapWriter(DumpWriter):
 
     def open_new_writer(self):
         d, file_name = os.path.split(self.file_path)
+        file_name, ext = os.path.splitext(file_name)
         if self.total_files > 0:
-            file_name = file_name[:-len(str(self.total_files))]
+            file_name = file_name[:-(len(str(self.total_files)) + 1)]
         self.total_files += 1
-        file_name += f'{self.total_files}'
-        self.file_path = os.path.join(d, file_name)
+        new_name = f'{file_name}.{self.total_files}{ext}'
+        self.file_path = os.path.join(d, new_name)
         self.open_writer()
 
     def open_writer(self):

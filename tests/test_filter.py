@@ -104,4 +104,3 @@ class TestFilter(TestCase):
         self.assertTrue(func(self.ether_ip_tcp))
         self.assertTrue(func(self.ether_ip_udp))
         self.assertTrue(func(self.ether_arp))
-

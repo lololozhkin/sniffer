@@ -124,5 +124,3 @@ class TestPackets(TestCase):
 
         self.assertTrue(isinstance(e.get_layer(UDP), UDP))
         self.assertIsNone(e.get_layer(TCP))
-
-

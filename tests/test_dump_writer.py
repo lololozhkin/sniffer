@@ -77,4 +77,3 @@ class TestDumpWriter(TestCase):
             is_cont_manager = False
 
         self.assertTrue(is_cont_manager)
-

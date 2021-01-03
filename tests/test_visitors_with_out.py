@@ -41,6 +41,7 @@ ARP_PACKET = (
     b"\x18\x4f\x32\x3f\x29\x73\xc0\xa8\x00\x66"
 )
 
+
 class ZeroVerbosityTests(TestCase):
     def setUp(self) -> None:
         self.visitor = ZeroVerbosityVisitor()
@@ -120,4 +121,3 @@ class SecondVerbosityTests(TestCase, BigVerbosityTestsMixin):
         expected = 'RAW payload: \n00000000: 61 62 61 63 61 62 61 64  ' \
                    '61 62 61 63 61 62 61     abacabadabacaba'
         self.assertEqual(expected, packet.accept_visitor(self.visitor))
-
